@@ -12,11 +12,27 @@ List::List() :first{ nullptr }
 List::~List()
 {
 	cout << "Object is being deleted" << endl;
-	clear();
+	//clear();
 }
 
-List::List(List const & l) :first{ clone(l.first) }
+List::Node::Node()
 {
+    
+}
+
+List::Node::Node(int data, Node* next): data{data}, next{next}, prev{nullptr}
+{
+    
+}
+
+List::Node::Node(int data, Node* next, Node* prev)
+{
+    
+}
+
+list::Node::~Node()
+{
+    
 }
 
 void List::insert(int i)
@@ -24,15 +40,23 @@ void List::insert(int i)
 	first = new Node{ i, nullptr };
 }
 
+
+/*
+List::List(List const & l) :first{ clone(l.first) }
+{
+}
+
+
+
 void List::remove(int index)
 {
     // prev kopplas om till next
     for (int i{0}; i < index; i++)
     {
-	
+	*data.prev.next = &data.next;
+	*data.next.prev = &data.prev;
     }
-    *data.prev.next = &data.next;
-    *data.next.prev = &data.prev;
+    
 }
 
 List & List::operator=(List const & rhs)
@@ -66,23 +90,9 @@ void List::clear()
 {
     if !(Node.next = nullptr) 
     {
-	
-	node.next.clear();
+	//remove(at(size()));
+	Node.next.clear();
     }
 }
-
-List::Node::Node(int d, Node * n)
-{
-    
-}
-
-List::Node::Node(int data, Node* next, Node* prev)
-{
-    
-}
-
-list::Node::~Node()
-{
-    
-}
+*/
 

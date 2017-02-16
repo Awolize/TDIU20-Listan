@@ -9,7 +9,7 @@ class List
 public:
     List();
     ~List();
-    List(List const&) // copy
+    List(List const&); // copy
     List & operator=(List const & rhs); //
     List & operator=(List && rhs); //
     List(List && rhs); // move
@@ -24,8 +24,9 @@ private:
     public: 
 	Node();
 	~Node();
-	int data;
+	Node(int data, Node* Next);
 	Node(int data, Node* next, Node* prev);
+	int data;
 	Node* next;
 	Node* prev;
     };
@@ -35,5 +36,6 @@ private:
 };
   
 //Free function
-    std::ostream & operator<< (std::ostream & D_list);  
+//  std::ostream & operator<< (std::ostream & D_list);  
 #endif
+
