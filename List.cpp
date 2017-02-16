@@ -27,7 +27,12 @@ void List::insert(int i)
 void List::remove(int index)
 {
     // prev kopplas om till next
-    Node(data.prev, prev.next, next.prev); // uuuh
+    for (int i{0}; i < index; i++)
+    {
+	
+    }
+    *data.prev.next = &data.next;
+    *data.next.prev = &data.prev;
 }
 
 List & List::operator=(List const & rhs)
@@ -59,8 +64,25 @@ List::List(initializer_list<int> li) : first{}
 
 void List::clear()
 {
+    if !(Node.next = nullptr) 
+    {
+	
+	node.next.clear();
+    }
 }
 
 List::Node::Node(int d, Node * n)
 {
+    
 }
+
+List::Node::Node(int data, Node* next, Node* prev)
+{
+    
+}
+
+list::Node::~Node()
+{
+    
+}
+

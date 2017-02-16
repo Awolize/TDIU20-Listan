@@ -1,7 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
-//#include initializer_list 
+//#include initializer_list valgrind a.out
+//skapa egna testfall/mainprogram, allt måste testas
 class List
 {
 
