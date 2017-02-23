@@ -38,5 +38,4 @@ private:
     Node* first;
     Node* end();
 };
-
 #endif

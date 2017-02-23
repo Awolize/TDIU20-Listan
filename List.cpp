@@ -209,3 +209,4 @@ List::Node::~Node()
 List::Node::Node(int data, Node * next) : data{ data }, next{ next }, prev{ nullptr }
 {
 }
+

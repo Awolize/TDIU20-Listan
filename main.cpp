@@ -117,6 +117,7 @@ int main()
 	for (int a{ 0 }; a < u.size(); a++) {
 	    cout << u.at(a) << " ";
 	}
+
 	cout << endl;
 	return 0;
 }
