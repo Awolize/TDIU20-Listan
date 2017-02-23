@@ -1,47 +1,48 @@
-#include "List.h"
 #include <iostream>
 #include <vector>
 #include <initializer_list>
+#include "List.h"
 using namespace std;
 
 List::List() :first{ nullptr }
 {
-    cout << "List is being created" << endl;
+    cout << " List is being created" << endl;
 }
 
 List::~List()
 {
-    cout << "List is being deleted" << endl;
-    //clear();
+    cout << " List is being deleted" << endl;
+    clear();
 }
 
-List::List(List const &)
+List::List(List const & t) : first{nullptr}
 {
+    for (int i{ 0 }; i < t.size(); i++)
+	this->insert(t.at(i));
 }
 
 List & List::operator=(List const & rhs)
 {
-    // TODO: insert return statement here
+    List copy{ rhs };
+    swap(first, copy.first);
     return *this;
 }
 
 List & List::operator=(List && rhs)
 {
-    // TODO: insert return statement here
+    swap(first, rhs.first);
     return *this;
 }
 
-List::List(List && rhs)
+List::List(List && rhs) : first{ rhs.first }
 {
+    rhs.first = nullptr;
 }
 
-List::List(std::initializer_list<int> const value)
-{	
-    first = new Node{ 0, nullptr, nullptr };
+List::List(std::initializer_list<int> const value) : first{}
+{
     for (int i : value)
-    {
 	insert(i);
-    }
 }
 
 void List::insert(int value)
@@ -51,13 +52,13 @@ void List::insert(int value)
 
 int List::at(int index) const
 {
-    Node *curr = first, *prev = curr;
+    Node *curr = first;
     for (int i{ 0 }; i < index; i++)
     {
 	if (i != size() - 1)
 	{
-	    prev = curr;
-	    curr = (*curr).next;
+	    curr->prev = curr;
+	    curr = curr->next;
 	}
 	if (i == size() - 1)
 	{
@@ -65,39 +66,41 @@ int List::at(int index) const
 	    return 0;
 	}
     }
-
-    return (*curr).data;
+    return curr->data;
 }
 
 void List::remove(int at)
 {
-    
-    Node *curr = first, *prev = nullptr;
-    
     if (at == 0)
     {
-	first = (*first).next;
+	Node *curr = first->next;
+	delete first;
+	first = curr;
     }
-    else if (at == size())
+    else if (at == size() - 1)
     {
-	end = (*end).prev;
-	(*end).next = nullptr;		   // kopplar loss den sista Noden
+	Node *curr = first;
+	while (curr->next != nullptr) {
+	    curr->prev = curr;
+	    curr = curr->next;
+	}
+	curr->prev->next = nullptr;
+	delete curr;
     }
     else if (at > size() || at < 0)
     {
-	throw std::invaild_argument("index not found in list");
+	throw std::invalid_argument("Index not found in list.");
     }
     else
     {
-	for (int i{ 0 }; i < at - 1; i++) {
-	    prev = curr;
-	    curr = (*curr).next;
+	Node *curr = first;
+	for (int i{ 0 }; i < at; i++) {
+	    curr->prev = curr;
+	    curr = curr->next;
 	}
-	//		Node *rem = (*curr).next;		Delete Lose Node
-	(*curr).next = (*(*curr).next).next;
-	(*(*(*curr).next).next).prev = curr;
-	//		delete rem;
-	//		rem = nullptr;
+	curr->next->prev = curr->prev;
+	curr->prev->next = curr->next;
+	delete curr;
     }
 }
 
@@ -107,7 +110,7 @@ int List::size() const
     int size{ 0 };
     while (p != nullptr)
     {
-	p = (*p).next;
+	p = p->next;
 	size++;
     }
 
@@ -121,37 +124,35 @@ void List::hidden_insert(int value)
     // om listan är tom
     if (empty()) {
 	first = p;
+	p->prev = p;
+	p->next = nullptr;
     }
     // om ny data är större än den första gamla
-    else if ((*first).data >= value) {
-	(*p).next = first;
+    else if (first->data >= value) {
+	p->next = first;
+	first->prev = p;
 	first = p;
-	(*(*p).next).prev = p;
     }
     // om den nya datan måste sorterar in i listan 
-    // --------------------- funkar inte atm -----------------------
     else {
 	Node *curr = first, *prev = curr;
 
 	while (curr != nullptr) {
-	    if ((*curr).data > value)
+	    if (curr->data > value)
 		break;
 	    prev = curr;
-	    curr = (*curr).next;
+	    curr = curr->next;
 	}
 
-	//		p.next = nullptr;
-	//		p.prev = nullptr;
-	//		p.data = value;
-
-	if (curr != nullptr) { // search found insert point
-	    (*p).next = curr;
-	    (*p).prev = (*curr).prev;
-	    (*(*curr).prev).next = p;
-	    (*curr).prev = p;
+	if (curr != nullptr) {
+	    p->next = curr;
+	    p->prev = curr->prev;
+	    curr->prev->next = p;
+	    curr->prev = p;
 	}
-	else if (curr == nullptr) {// search did not find insert point
-	    (*prev).next = p;
+	else if (curr == nullptr) {
+	    prev->next = p;
+	    p->prev = prev;
 	}
     }
 }
@@ -166,26 +167,28 @@ bool List::empty()
 
 void List::clear()
 {
-    Node *temp = new node();
-    temp = end();
-    if((*temp).prev != nullptr)
+    Node *curr = first;
+    while (first != nullptr)
     {
-	prev.clear();
+	curr->prev = curr;
+	curr = curr->next;
+	delete first;
+	first = curr;
     }
-    first = (*this).next;
-    (*(*this).next).prev
-   
+    delete curr;
 }
 
 List::Node * List::end()
 {
-    Node *curr = first; 
-    for (int i{0}; i < (size() -1); i++)
+    Node *curr = first;
+    for (int i{ 0 }; i < (size() - 1); i++)
     {
-	if (curr = nullptr)
+	if ((curr = nullptr))
+	{
 	    break;
-	prev = curr;
-	curr = (*curr).next;
+	}
+	curr->prev = curr;
+	curr = curr->next;
     }
 
     return curr;
@@ -199,17 +202,10 @@ List::Node::Node(int value) : data{ value }, next{ nullptr }, prev{ nullptr }
 {
 }
 
-/*
-List::Node::~Node()	// skip atm
+List::Node::~Node()
 {
-    delete *this;
 }
 
 List::Node::Node(int data, Node * next) : data{ data }, next{ next }, prev{ nullptr }
 {
 }
-
-List::Node::Node(int data, Node * next, Node * prev)
-{
-}
-*/
