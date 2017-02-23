@@ -93,13 +93,13 @@ void List::remove(int at)
     }
     else
     {
-	Node *curr = first;
+	Node *curr = first, *prev = curr;
 	for (int i{ 0 }; i < at; i++) {
-	    curr->prev = curr;
+	    prev = curr;
 	    curr = curr->next;
 	}
-	curr->next->prev = curr->prev;
-	curr->prev->next = curr->next;
+	curr->next->prev = prev;
+	prev->next = curr->next;
 	delete curr;
     }
 }

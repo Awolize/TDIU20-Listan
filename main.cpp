@@ -117,8 +117,6 @@ int main()
 	for (int a{ 0 }; a < u.size(); a++) {
 	    cout << u.at(a) << " ";
 	}
-	lhej1.clear();
 	cout << endl;
-	//system("pause");
 	return 0;
 }
