@@ -39,3 +39,13 @@ private:
     Node* end();
 };
 #endif
+
+/*
+Bra jobbat med labben!.
+
+Se till att städa upp i filen, jag vill inte ha massa överflödiga kommentarer.
+
+Ni verkar ha ett större fel eftersom ni helt saknar en sentinel i er lista, läs igenom uppgiften igen och rätta till.
+
+Gå igenom cc filen för mina kommentarer och rätta till där det är fel.
+*/

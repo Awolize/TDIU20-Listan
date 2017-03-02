@@ -2,6 +2,7 @@
 #include <vector>
 #include <initializer_list>
 #include "List.h"
+#include "stdexcept"
 using namespace std;
 
 List::List() :first{ nullptr }
@@ -19,10 +20,12 @@ List::List(List const & t) : first{nullptr}
 {
     for (int i{ 0 }; i < t.size(); i++)
 	this->insert(t.at(i));
+//Använd inte insert vid kopiering, Det är fruktansvärt innefektivt att traversera hela listan vid varje insättning
 }
 
 List & List::operator=(List const & rhs)
 {
+//Så ni gör en ny lista som heter copy, sedan swappar ni first pekaren, vad händer med end?
     List copy{ rhs };
     swap(first, copy.first);
     return *this;
@@ -30,6 +33,7 @@ List & List::operator=(List const & rhs)
 
 List & List::operator=(List && rhs)
 {
+//Vad händer med end pekaren?
     swap(first, rhs.first);
     return *this;
 }
@@ -122,7 +126,7 @@ void List::hidden_insert(int value)
     Node *p = new Node(value);
 
     // om listan är tom
-    if (empty()) {
+    if (empty()) { 
 	first = p;
 	p->prev = p;
 	p->next = nullptr;
