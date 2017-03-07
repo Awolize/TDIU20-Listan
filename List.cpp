@@ -2,7 +2,6 @@
 #include <vector>
 #include <initializer_list>
 #include "List.h"
-#include "stdexcept"
 using namespace std;
 
 List::List() :first{ nullptr }
@@ -25,7 +24,6 @@ List::List(List const & t) : first{nullptr}
 
 List & List::operator=(List const & rhs)
 {
-//Så ni gör en ny lista som heter copy, sedan swappar ni first pekaren, vad händer med end?
     List copy{ rhs };
     swap(first, copy.first);
     return *this;
@@ -33,7 +31,6 @@ List & List::operator=(List const & rhs)
 
 List & List::operator=(List && rhs)
 {
-//Vad händer med end pekaren?
     swap(first, rhs.first);
     return *this;
 }
@@ -125,36 +122,41 @@ void List::hidden_insert(int value)
 {
     Node *p = new Node(value);
 
-    // om listan är tom
-    if (empty()) { 
+    if (empty()) 
+    { 
 	first = p;
 	p->prev = p;
 	p->next = nullptr;
     }
-    // om ny data är större än den första gamla
-    else if (first->data >= value) {
+    else if (first->data >= value) 
+    {
 	p->next = first;
 	first->prev = p;
 	first = p;
     }
-    // om den nya datan måste sorterar in i listan 
-    else {
+    else 
+    {
 	Node *curr = first, *prev = curr;
 
-	while (curr != nullptr) {
+	while (curr != nullptr) 
+	{
 	    if (curr->data > value)
+	    {
 		break;
+	    }
 	    prev = curr;
 	    curr = curr->next;
 	}
 
-	if (curr != nullptr) {
+	if (curr != nullptr) 
+	{
 	    p->next = curr;
 	    p->prev = curr->prev;
 	    curr->prev->next = p;
 	    curr->prev = p;
 	}
-	else if (curr == nullptr) {
+	else if (curr == nullptr) 
+	{
 	    prev->next = p;
 	    p->prev = prev;
 	}
