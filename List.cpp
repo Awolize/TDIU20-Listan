@@ -15,11 +15,17 @@ List::~List()
     clear();
 }
 
-List::List(List const & t) : first{nullptr}
+List::List(List const & rhs) : first{nullptr}
 {
-    for (int i{ 0 }; i < t.size(); i++)
-	this->insert(t.at(i));
-//Använd inte insert vid kopiering, Det är fruktansvärt innefektivt att traversera hela listan vid varje insättning
+    first = new Node(rhs.first->data);
+    Node* rhs_curr = rhs.first->next;
+    Node* prev = first;
+    while (rhs_curr) {
+	prev->next = new Node(rhs_curr->data);
+	rhs_curr = rhs_curr->next;
+	prev = prev->next;
+    }
+//Använd inte insert vid kopiering, Det är fruktansvärt innefektivt att traversera hela listan vid varje insättning // fixat
 }
 
 List & List::operator=(List const & rhs)
@@ -28,6 +34,7 @@ List & List::operator=(List const & rhs)
     swap(first, copy.first);
     return *this;
 }
+
 
 List & List::operator=(List && rhs)
 {

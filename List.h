@@ -16,7 +16,8 @@ public:
     void insert(int value);			   
     int at(int index) const;			
     void remove(int index);		    	       	
-    int size() const;				       	
+    int size() const;	
+			       	
 private:
     class Node
     {
@@ -39,10 +40,5 @@ private:
 #endif
 
 /*
-Bra jobbat med labben!.
-
-
-
-Gå igenom cc filen för mina kommentarer och rätta till där det är fel.
-end pekarfunktionen
+  Gå igenom cc filen för mina kommentarer och rätta till där det är fel.
 */

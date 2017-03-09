@@ -36,15 +36,24 @@ int main()
 		cout << l.at(a) << " ";
 	}
 	cout << endl;
+	cout << "Size of list t: " << t.size() << endl;
+	cout << "List: ";
+	for (int a{ 0 }; a < t.size(); a++) {
+		cout << t.at(a) << " ";
+	}
+	cout << endl;
 	cout << endl;
 
 	cout << "________________New test Case:________________ " << endl;
 	cout << "Function: 'Remove'" << endl;
-
+	cout << "List: ";
+	for (int a{ 0 }; a < t.size(); a++) {
+		cout << t.at(a) << " ";
+	}
+	cout << endl;
 	t.remove(4);
 
 	cout << "Removing index 4." << endl;;
-	cout << "Size of list t: " << t.size() << endl;
 	cout << "List: ";
 	for (int a{ 0 }; a < t.size(); a++) {
 		cout << t.at(a) << " ";
@@ -72,7 +81,6 @@ int main()
 	cout << endl;
 	b = c;
 	cout << "**Swap**" << endl;
-
 	cout << "List b: ";
 	for (int a{ 0 }; a < b.size(); a++) {
 		cout << b.at(a) << " ";
