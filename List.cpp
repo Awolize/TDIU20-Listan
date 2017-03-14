@@ -2,7 +2,9 @@
 #include <vector>
 #include <initializer_list>
 #include "List.h"
+#include <stdexcept>
 using namespace std;
+
 
 List::List() :first{ nullptr }
 {
